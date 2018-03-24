@@ -12,7 +12,7 @@ function replaceImageGridUrls(elems) {
         el.innerHTML = 'View';
         el.setAttribute('style', 'margin-right: 10px');
 
-        addRawUrlButton(el);
+        addHQUrlButton(el);
     });
 }
 
@@ -24,24 +24,24 @@ function replaceImageSingleUrl(el) {
     el.innerHTML = 'View';
     el.parentNode.setAttribute('style', 'width: 104px !important');
 
-    addRawUrlButton(el);
+    addHQUrlButton(el);
 }
 
-function addRawUrlButton(link) {
+function addHQUrlButton(link) {
     var http = new XMLHttpRequest(),
         buttonContainer = link.parentNode.parentNode,
-        rawButton = link.parentNode.cloneNode(true);
+        hqButton = link.parentNode.cloneNode(true);
 
     http.open('HEAD', link.getAttribute('href'));
     http.onreadystatechange = function () {
         if (this.readyState === this.DONE) {
-            var rawUrl = this.responseURL.substring(0, this.responseURL.indexOf('?')),
-                rawLink = rawButton.querySelector('a');
+            var hqUrl = this.responseURL.substring(0, this.responseURL.indexOf('?')),
+                hqLink = hqButton.querySelector('a');
 
-            rawLink.setAttribute('href', rawUrl);
-            rawLink.innerHTML = 'View RAW';
+            hqLink.setAttribute('href', hqUrl);
+            hqLink.innerHTML = 'View HQ';
 
-            buttonContainer.appendChild(rawButton);
+            buttonContainer.appendChild(hqButton);
         }
     };
     http.send();

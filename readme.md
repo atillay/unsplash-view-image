@@ -1,6 +1,6 @@
 # Unsplash view image
 
-Replaces forced download button by two "View" and "View RAW" buttons
+Replaces forced download button by two "View" and "View HQ" buttons
 
 ![Screenshot](screenshot.jpg)
 
