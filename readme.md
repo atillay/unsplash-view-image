@@ -2,6 +2,8 @@
 
 Replaces forced download button by two "View" and "View RAW" buttons
 
+![Screenshot](screenshot.jpg)
+
 ## Quickstart
 - Download repo on your computer
 - Go to : `chrome://extensions` 
