@@ -49,7 +49,7 @@ function addRawUrlButton(link) {
 
 function disableSayThanksMessage() {
     var styleSheet = window.document.styleSheets[0];
-    styleSheet.insertRule('._3rh8J { display: none; }', sheet.cssRules.length);
+    styleSheet.insertRule('._3rh8J { display: none; }', styleSheet.cssRules.length);
 }
 
 document.addEventListener('DOMNodeInserted', function() {
