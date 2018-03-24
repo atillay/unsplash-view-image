@@ -47,11 +47,15 @@ function addRawUrlButton(link) {
     http.send();
 }
 
+function disableSayThanksMessage() {
+    var styleSheet = window.document.styleSheets[0];
+    styleSheet.insertRule('._3rh8J { display: none; }', sheet.cssRules.length);
+}
+
 document.addEventListener('DOMNodeInserted', function() {
     if (!lockCalls) {
         lockCalls = true;
         setTimeout(function() {
-            console.log('call');
             var imageGridElems = document.querySelectorAll(imageGridDlButton),
                 imageSingleElem = document.querySelector(imageSingleDlButton);
 
@@ -62,3 +66,5 @@ document.addEventListener('DOMNodeInserted', function() {
         }, 60);
     }
 });
+
+disableSayThanksMessage();
