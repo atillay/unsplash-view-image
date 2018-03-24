@@ -1,64 +1,64 @@
-var imageGridDlButton = '._12slh a';
-var imageSingleDlButton = '._3-6v7 div:last-child a';
+var attrModifiedUrl = 'data-modified-url',
+    lockCalls = false,
+    imageGridDlButton = '._12slh a:not([' + attrModifiedUrl + '="1"])',
+    imageSingleDlButton = '._3-6v7 div:last-child a:not([' + attrModifiedUrl + '="1"])';
 
-var imageGridLoaded = setInterval(function() {
-    if (document.querySelectorAll(imageGridDlButton).length > 0) {
-        clearInterval(imageGridLoaded);
-        replaceImageGridUrls();
-    }
-}, 120);
+function replaceImageGridUrls(elems) {
+    [].forEach.call(elems, function (el) {
+        var compressedUrl = el.getAttribute('href').replace('?force=true', '');
 
-var imageSingleLoaded = setInterval(function() {
-    if (document.querySelectorAll(imageSingleDlButton).length > 0) {
-        clearInterval(imageSingleLoaded);
-        replaceImageSingleUrl();
-    }
-}, 120);
+        el.setAttribute('href', compressedUrl);
+        el.setAttribute(attrModifiedUrl, '1');
+        el.innerHTML = 'View';
+        el.setAttribute('style', 'margin-right: 10px');
 
-function replaceImageGridUrls() {
-    [].forEach.call(
-        document.querySelectorAll('._12slh a'),
-        function (el) {
-            var compressedUrl = el.getAttribute('href').replace('?force=true', '');
-            el.setAttribute('href', compressedUrl);
-            el.innerHTML = 'View';
-
-            var buttonContainer = el.parentNode.parentNode;
-            var button = el.parentNode.cloneNode(true);
-            button.setAttribute('style', 'margin-left: 10px');
-
-            getRawUrl(el, buttonContainer, button);
-        }
-    );
+        addRawUrlButton(el);
+    });
 }
 
-function replaceImageSingleUrl() {
-    var el = document.querySelector(imageSingleDlButton);
+function replaceImageSingleUrl(el) {
     var compressedUrl = el.getAttribute('href').replace('?force=true', '');
 
     el.setAttribute('href', compressedUrl);
+    el.setAttribute(attrModifiedUrl, '1');
     el.innerHTML = 'View';
     el.parentNode.setAttribute('style', 'width: 104px !important');
 
-    var buttonContainer = el.parentNode.parentNode;
-    var button = el.parentNode.cloneNode(true);
-
-    getRawUrl(el, buttonContainer, button);
+    addRawUrlButton(el);
 }
 
-function getRawUrl(image, buttonContainer, button) {
-    var http = new XMLHttpRequest();
-    http.open('HEAD', image.getAttribute('href'));
+function addRawUrlButton(link) {
+    var http = new XMLHttpRequest(),
+        buttonContainer = link.parentNode.parentNode,
+        rawButton = link.parentNode.cloneNode(true);
+
+    http.open('HEAD', link.getAttribute('href'));
     http.onreadystatechange = function () {
         if (this.readyState === this.DONE) {
-            var rawUrl = this.responseURL.substring(0, this.responseURL.indexOf('?'));
+            var rawUrl = this.responseURL.substring(0, this.responseURL.indexOf('?')),
+                rawLink = rawButton.querySelector('a');
 
-            var rawLink = button.querySelector('a');
             rawLink.setAttribute('href', rawUrl);
             rawLink.innerHTML = 'View RAW';
 
-            buttonContainer.appendChild(button);
+            buttonContainer.appendChild(rawButton);
         }
     };
     http.send();
 }
+
+document.addEventListener('DOMNodeInserted', function() {
+    if (!lockCalls) {
+        lockCalls = true;
+        setTimeout(function() {
+            console.log('call');
+            var imageGridElems = document.querySelectorAll(imageGridDlButton),
+                imageSingleElem = document.querySelector(imageSingleDlButton);
+
+            if (imageGridElems.length > 0) replaceImageGridUrls(imageGridElems);
+            if (imageSingleElem)replaceImageSingleUrl(imageSingleElem);
+
+            lockCalls = false;
+        }, 60);
+    }
+});

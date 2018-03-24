@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "",
-  "homepage_url": "http://localhost",
+  "homepage_url": "https://unsplash.com",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
