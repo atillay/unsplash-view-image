@@ -1,6 +1,6 @@
 # Unsplash view image
 
-Replaces forced download button by two "View" and "View HQ" buttons
+Appends two links next to download button to view optimized and uncompressed image in browser.
 
 ![Screenshot](screenshot.jpg)
 
