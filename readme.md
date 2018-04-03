@@ -2,8 +2,6 @@
 
 Appends two links next to download button to view optimized and uncompressed image in browser.
 
-![Screenshot](screenshot.jpg)
-
 ## Quickstart
 - Download repo on your computer
 - Go to : `chrome://extensions` 
