@@ -17,5 +17,6 @@
   ],
   "permissions": [
     "https://images.unsplash.com/*"
-  ]
+  ],
+  "web_accessible_resources": ["icons/sd.svg", "icons/hd.svg"]
 }
